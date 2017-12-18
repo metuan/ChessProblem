@@ -30,21 +30,6 @@ When returning your solution, please provide with your answer the total number o
 a 7×7 board with 2 Kings, 2 Queens, 2 Bishops and 1 Knight. Also provide the time it took to get
 the final score. Needless to say, the lower the time, the better.
 
-### Examples
-
-Input: 3×3 board containing 2 Kings and 1 Rook.
-Output:
-| K | ●  | K |  | K | ●  |  ○ | 
-|--:|---|---|---|--:|---|---| 
-|   ●| ○  |  ● | |   ●| ○  |  R|  
-|  ○ | K | ○  | |  K | ● | ○  | 
-
-| ○ | ●  | K |  | ○ | R  | ○ |
-|--:|---|---|---|--:|---|---| 
-|   R| ○  |  ● | |   ●| ○  |  ● |
-|  ○ | ●  | K  | |  K |  ● | K  |
-
-
 
 ### Last note
 
