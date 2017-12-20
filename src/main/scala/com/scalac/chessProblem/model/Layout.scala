@@ -1,6 +1,6 @@
 package com.scalac.chessProblem.model
 
-abstract class BoardToPrint
-case object EmptyPosition extends BoardToPrint
-case object AttackedPosition extends BoardToPrint
-case class OccupiedPosition(piece: Piece) extends BoardToPrint
+abstract class PositionToPrint
+case object EmptyPosition extends PositionToPrint
+case object AttackedPosition extends PositionToPrint
+case class OccupiedPosition(piece: Piece) extends PositionToPrint
