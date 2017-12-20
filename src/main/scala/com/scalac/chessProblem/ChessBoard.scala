@@ -43,7 +43,26 @@ class ChessBoard(override val width: Int, override val height: Int) extends Boar
     }
       case _ => listOfAvailablePositions
     }
-    
+
+    override def equals(obj: scala.Any) = {
+      obj match {
+        case possibleInstance : instanceOfChessBoardToPlay => List(layout: _*) == List(possibleInstance.layout :_*)
+        case _ => false
+      }
+    }
+
+    override def toString = {
+      (0 until height).map( yDir =>
+        (0 until width).map( xDir =>
+          atPosition(Position(xDir, yDir)) match {
+            case EmptyPosition => "_ "
+            case AttackedPosition => "* "
+            case OccupiedPosition(p) => p.symbolOfPiece + " "
+          }).mkString
+      ).mkString("\n")
+    }
+
+
   }
   case class InfoOfBoard(previousBoard : instanceOfChessBoardToPlay, piece: PieceOnBoard, position: Position)
   case class PieceOnBoard(piece: Piece) {
