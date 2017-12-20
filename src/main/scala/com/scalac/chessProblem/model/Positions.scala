@@ -4,7 +4,7 @@ case class Position(x: Int, y: Int) {
   def placeOnPosition(position: Position): Position = copy( x = position.x + x , y = position.y + y)
 }
 
-class UniquePosition(override val width : Int, override val height: Int, position: Position) extends Board {
+class PositionEnvelope(override val width : Int, override val height: Int, position: Position) extends Board {
 
   def convertPositionToNumber =  {
     position.y * width + position.x
