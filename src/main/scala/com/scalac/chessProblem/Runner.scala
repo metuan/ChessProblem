@@ -6,7 +6,8 @@ object Runner extends App{
   val begin = clockStartStop
   val numberOfSolutions = 0
   Thread.sleep(1000)
-  val executionTimeInMilliseconds = (clockStartStop - begin) / 1000.0
+  val end = clockStartStop
+  val executionTimeInMilliseconds = (end - begin) / 1000.0
 
   println("Number of solutions: " + numberOfSolutions)
   println("Elapsed time: " + executionTimeInMilliseconds + " ms")
