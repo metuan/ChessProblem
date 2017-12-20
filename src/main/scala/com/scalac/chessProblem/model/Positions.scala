@@ -10,7 +10,7 @@ class UniquePosition(override val width : Int, override val height: Int, positio
     position.y * width + position.x
   }
 
-  def isPositionOnBoard = {
+  def isPositionOnChessBoard = {
     (position.x < width && position.x >= 0) && (position.y < height && position.y >= 0)
   }
 }
