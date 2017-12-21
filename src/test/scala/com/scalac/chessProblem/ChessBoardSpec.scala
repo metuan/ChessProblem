@@ -16,7 +16,7 @@ class ChessBoardSpec extends FlatSpec {
   }
 
   it should "list available position with Queen on chess board in left top corner" in {
-      val instanceOfChessBoard = new chessBoard.instanceOfChessBoardToPlay(Array(
+      val instanceOfChessBoard = new chessBoard.singleChessBoard(Array(
         OccupiedPosition(Queen), AttackedPosition, AttackedPosition,
         AttackedPosition, AttackedPosition, EmptyPosition,
         AttackedPosition, EmptyPosition, AttackedPosition
@@ -25,7 +25,7 @@ class ChessBoardSpec extends FlatSpec {
   }
 
   it should "list available position with King on chess board in the middle of it" in {
-    val instanceOfChessBoard = new chessBoard.instanceOfChessBoardToPlay(Array(
+    val instanceOfChessBoard = new chessBoard.singleChessBoard(Array(
       AttackedPosition, AttackedPosition, AttackedPosition,
       AttackedPosition, OccupiedPosition(King), AttackedPosition,
       AttackedPosition, AttackedPosition, AttackedPosition
@@ -34,7 +34,7 @@ class ChessBoardSpec extends FlatSpec {
   }
 
   it should "list available position with Rook on chess board in the middle of it" in {
-    val instanceOfChessBoard = new chessBoard.instanceOfChessBoardToPlay(Array(
+    val instanceOfChessBoard = new chessBoard.singleChessBoard(Array(
       EmptyPosition, AttackedPosition, EmptyPosition,
       AttackedPosition, OccupiedPosition(Rook), AttackedPosition,
       EmptyPosition, AttackedPosition, EmptyPosition
@@ -43,7 +43,7 @@ class ChessBoardSpec extends FlatSpec {
   }
 
   it should "list available position with Bishop on chess board in the right top corner" in {
-    val instanceOfChessBoard = new chessBoard.instanceOfChessBoardToPlay(Array(
+    val instanceOfChessBoard = new chessBoard.singleChessBoard(Array(
       EmptyPosition, EmptyPosition, OccupiedPosition(Bishop),
       EmptyPosition, AttackedPosition, EmptyPosition,
       EmptyPosition, EmptyPosition, EmptyPosition
@@ -52,7 +52,7 @@ class ChessBoardSpec extends FlatSpec {
   }
 
   it should "list available position with Knight on chess board in the right top corner" in {
-    val instanceOfChessBoard = new chessBoard.instanceOfChessBoardToPlay(Array(
+    val instanceOfChessBoard = new chessBoard.singleChessBoard(Array(
       EmptyPosition, EmptyPosition, OccupiedPosition(Knight),
       AttackedPosition, EmptyPosition, EmptyPosition,
       EmptyPosition, AttackedPosition, EmptyPosition
