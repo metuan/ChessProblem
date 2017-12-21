@@ -11,13 +11,12 @@ class ChessBoard(override val width: Int, override val height: Int) extends Boar
     for(x <- -width to width; y <- -height to height) yield Position(x,y)
   }
 
-  class instanceOfChessBoardToPlay(val layout : Array[PositionToPrint], info : Option[InfoOfBoard]) {
-    require(layout.size == width * height, "Board to print should have same size as chess board instance")
+  class singleChessBoard(val layout : Array[PositionToPrint], info : Option[InfoOfBoard]) {
 
     def this() = this(Array.fill(width * height)(EmptyPosition), None)
     def this(layout : Array[PositionToPrint]) = this(layout, None)
 
-    def movesOfPiece(pieceOnBoard: PieceOnBoard, position: Position) = {
+    def getMovesOfPiece(pieceOnBoard: PieceOnBoard, position: Position) = {
       pieceOnBoard.possibleMovesOnBoard.map {
         piece => position.placeOnPosition(piece)
       }.filter(_.isPositionOnChessBoard)
@@ -25,6 +24,30 @@ class ChessBoard(override val width: Int, override val height: Int) extends Boar
 
     def atPosition(position: Position) = {
       layout(position.convertPositionToNumber)
+    }
+
+    def getInstanceWithNewPiece(pieceOnBoard: PieceOnBoard, position: Position, movesOfAPiece: Iterable[Position]) = {
+      val layoutWithNewPiece = layout.clone
+      for (piece <- movesOfAPiece) {
+        layoutWithNewPiece(piece.convertPositionToNumber) = AttackedPosition
+      }
+      layoutWithNewPiece.update(position.convertPositionToNumber, OccupiedPosition(pieceOnBoard.piece))
+      new singleChessBoard(layoutWithNewPiece, Some(InfoOfBoard(this, pieceOnBoard, position)))
+    }
+
+    def isValidToPlace(pieceOnBoard: PieceOnBoard, position: Position, movesOfAPiece : Iterable[Position]) = {
+      movesOfAPiece.forall{ piece =>
+        val positionOnBoard = atPosition(piece)
+        ((positionOnBoard eq EmptyPosition) || (positionOnBoard eq AttackedPosition))
+      }
+    }
+
+    def placePieceOnBoard(pieceOnBoard: PieceOnBoard) = {
+      isPositionAvailable(pieceOnBoard).flatMap { piece =>
+        val movesOfPiece = getMovesOfPiece(pieceOnBoard, piece)
+        if (isValidToPlace(pieceOnBoard, piece, movesOfPiece)) Some(getInstanceWithNewPiece(pieceOnBoard, piece, movesOfPiece))
+        else None
+      }
     }
 
     def listOfAvailablePositions = {
@@ -46,7 +69,7 @@ class ChessBoard(override val width: Int, override val height: Int) extends Boar
 
     override def equals(obj: scala.Any) = {
       obj match {
-        case possibleInstance : instanceOfChessBoardToPlay => List(layout: _*) == List(possibleInstance.layout :_*)
+        case possibleInstance : singleChessBoard => List(layout: _*) == List(possibleInstance.layout :_*)
         case _ => false
       }
     }
@@ -62,14 +85,31 @@ class ChessBoard(override val width: Int, override val height: Int) extends Boar
       ).mkString("\n")
     }
 
-
   }
-  case class InfoOfBoard(previousBoard : instanceOfChessBoardToPlay, piece: PieceOnBoard, position: Position)
+  case class InfoOfBoard(previousBoard : singleChessBoard, piece: PieceOnBoard, position: Position)
   case class PieceOnBoard(piece: Piece) {
     val possibleMovesOnBoard = positionsOnBoard.filter {
       position => piece.isValidMove(position)
   }}
-  case class EmptyBoard() extends instanceOfChessBoardToPlay
+  case class EmptyBoard() extends singleChessBoard
 
-//  def solve (sequenceOfPieces : Piece*) : (Int, List[instanceOfChessBoardToPlay]) =
+  def solve(_pieces: Piece*) : (Int, List[singleChessBoard]) = {
+    val pieces = Vector( _pieces : _*).map { p => PieceOnBoard(p) }
+    var numberOfSolutions = 0
+    var listOfBoards : List[singleChessBoard] = List()
+
+    def findPlaces(level: Int, board: singleChessBoard) {
+      if(level == pieces.size) {
+        numberOfSolutions +=1
+        if (numberOfSolutions < 5) {
+          listOfBoards ::= board
+        }
+      } else {
+        val curPiece = pieces(level)
+        board.placePieceOnBoard(curPiece).foreach( newBoard => findPlaces(level+1, newBoard) )
+      }
+    }
+    findPlaces(0, new EmptyBoard)
+    (numberOfSolutions, listOfBoards)
+  }
 }
