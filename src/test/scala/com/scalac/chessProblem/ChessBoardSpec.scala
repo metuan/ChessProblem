@@ -60,9 +60,29 @@ class ChessBoardSpec extends FlatSpec {
     assert(instanceOfChessBoard.listOfAvailablePositions.toSet == Set(Position(0,2), Position(0,0), Position(1,1), Position(2,2), Position(2,1), Position(1,0)))
   }
 
+  it should "list available postions on board using another method" in {
+    val chessBoard = new ChessBoard(3,3)
+    import chessBoard._
+    val instanceOfChessBoard = new singleChessBoard()
+    val possibleMoves = instanceOfChessBoard.getMovesOfPiece(PieceOnBoard(Queen), Position(0,0))
+    assert(possibleMoves.toSet == Set(Position(0,2), Position(0,0), Position(2,0), Position(1,1), Position(2,2), Position(0,1), Position(1,0)))
+  }
 
+  it should "solve 8 queens problem" in {
+    val chessBoard = new ChessBoard(8,8)
+    val (number, list) = chessBoard.solve(List(Queen, Queen, Queen, Queen, Queen, Queen, Queen, Queen))
+    assert(number == 92)
+  }
 
+  it should "solve 4 rooks problem on 4x4" in {
+    val chessBoard = new ChessBoard(4,4)
+    val (number, list) = chessBoard.solve(List(Rook, Rook, Rook, Rook))
+    assert(number == 24)
+  }
 
-
-
+  it should "solve 4 rooks problem on 8x8" in {
+    val chessBoard = new ChessBoard(8,8)
+    val (number, list) = chessBoard.solve(List(Rook, Rook, Rook, Rook, Rook, Rook, Rook, Rook))
+    assert(number == 40320)
+  }
 }
