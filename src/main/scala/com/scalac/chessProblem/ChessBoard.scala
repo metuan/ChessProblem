@@ -1,8 +1,10 @@
 package com.scalac.chessProblem
 
 import com.scalac.chessProblem.model._
+import scala.language.implicitConversions
 
-class ChessBoard(override val width: Int, override val height: Int) extends Board {
+class ChessBoard(override val width : Int, override val height: Int) extends Board {
+
   implicit def getNumberOfPosition (position: Position) = new PositionEnvelope(width, height, position)
 
   def createFromIndex(i : Int) = Position(i % width, i / width)
@@ -11,7 +13,7 @@ class ChessBoard(override val width: Int, override val height: Int) extends Boar
     for(x <- -width to width; y <- -height to height) yield Position(x,y)
   }
 
-  class singleChessBoard(val layout : Array[PositionToPrint], info : Option[InfoOfBoard]) {
+  class singleChessBoard(val layout : Array[PositionToPrint], boardInfo : Option[InfoOfBoard]) {
 
     def this() = this(Array.fill(width * height)(EmptyPosition), None)
     def this(layout : Array[PositionToPrint]) = this(layout, None)
@@ -23,22 +25,22 @@ class ChessBoard(override val width: Int, override val height: Int) extends Boar
     }
 
     def atPosition(position: Position) = {
-      layout(position.convertPositionToNumber)
+      layout(position.getPositionID)
     }
 
     def getInstanceWithNewPiece(pieceOnBoard: PieceOnBoard, position: Position, movesOfAPiece: Iterable[Position]) = {
       val layoutWithNewPiece = layout.clone
       for (piece <- movesOfAPiece) {
-        layoutWithNewPiece(piece.convertPositionToNumber) = AttackedPosition
+        layoutWithNewPiece(piece.getPositionID) = AttackedPosition
       }
-      layoutWithNewPiece.update(position.convertPositionToNumber, OccupiedPosition(pieceOnBoard.piece))
+      layoutWithNewPiece.update(position.getPositionID, OccupiedPosition(pieceOnBoard.piece))
       new singleChessBoard(layoutWithNewPiece, Some(InfoOfBoard(this, pieceOnBoard, position)))
     }
 
     def isValidToPlace(pieceOnBoard: PieceOnBoard, position: Position, movesOfAPiece : Iterable[Position]) = {
       movesOfAPiece.forall{ piece =>
         val positionOnBoard = atPosition(piece)
-        ((positionOnBoard eq EmptyPosition) || (positionOnBoard eq AttackedPosition))
+        (positionOnBoard eq EmptyPosition) || (positionOnBoard eq AttackedPosition)
       }
     }
 
@@ -60,10 +62,10 @@ class ChessBoard(override val width: Int, override val height: Int) extends Boar
       }
     }
 
-    def isPositionAvailable (piece: PieceOnBoard) = info match {
+    def isPositionAvailable (piece: PieceOnBoard) = boardInfo match {
       case Some(i) if i.piece == piece => listOfAvailablePositions.filter {
-        p => p.convertPositionToNumber > i.position.convertPositionToNumber
-    }
+        p => p.getPositionID > i.position.getPositionID
+      }
       case _ => listOfAvailablePositions
     }
 
@@ -78,30 +80,35 @@ class ChessBoard(override val width: Int, override val height: Int) extends Boar
       (0 until height).map( yDir =>
         (0 until width).map( xDir =>
           atPosition(Position(xDir, yDir)) match {
-            case EmptyPosition => "_ "
             case AttackedPosition => "* "
+            case EmptyPosition => "_ "
             case OccupiedPosition(p) => p.symbolOfPiece + " "
           }).mkString
       ).mkString("\n")
     }
 
   }
+
   case class InfoOfBoard(previousBoard : singleChessBoard, piece: PieceOnBoard, position: Position)
-  case class PieceOnBoard(piece: Piece) {
+
+  case class PieceOnBoard(piece: Piece) extends {
     val possibleMovesOnBoard = positionsOnBoard.filter {
       position => piece.isValidMove(position)
-  }}
+    }}
+
   case class EmptyBoard() extends singleChessBoard
 
-  def solve(_pieces: Piece*) : (Int, List[singleChessBoard]) = {
-    val pieces = Vector( _pieces : _*).map { p => PieceOnBoard(p) }
+  def solve(piecesToPutOnBoard: List[Piece]) : (Int, List[singleChessBoard]) = {
+    val pieces = piecesToPutOnBoard.map {
+      piece => PieceOnBoard(piece)
+    }
     var numberOfSolutions = 0
     var listOfBoards : List[singleChessBoard] = List()
 
     def findPlaces(level: Int, board: singleChessBoard) {
-      if(level == pieces.size) {
+      if(level == pieces.length) {
         numberOfSolutions +=1
-        if (numberOfSolutions < 5) {
+        if (numberOfSolutions < 3) {
           listOfBoards ::= board
         }
       } else {
@@ -109,6 +116,7 @@ class ChessBoard(override val width: Int, override val height: Int) extends Boar
         board.placePieceOnBoard(curPiece).foreach( newBoard => findPlaces(level+1, newBoard) )
       }
     }
+
     findPlaces(0, new EmptyBoard)
     (numberOfSolutions, listOfBoards)
   }
