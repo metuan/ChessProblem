@@ -51,8 +51,8 @@ sbt run // to run example configuration
 
 Input:
 
-- ChessBoard(7,7)
-- List(King, King, Queen, Queen, Bishop, Bishop, Knight)
+    - ChessBoard(7,7)
+    - List(King, King, Queen, Queen, Bishop, Bishop, Knight)
 
 Output: 
 - Number of solutions: 3063828
@@ -67,7 +67,7 @@ Output:
     [info] Number of solutions: 3063828
     [info] Elapsed time: 20.902 ms
     [success] Total time: 25 s, completed Dec 22, 2017 1:24:47 AM
-    ![alt text](images/sbtConsole.png)
+    [SBTCONSOLE](https://bitbucket.org/metuan/scalac-chess-problem/raw/master/images/sbtConsole.png)
 
 ### How we can improve?
 
