@@ -6,7 +6,7 @@ case class Position(x: Int, y: Int) {
 
 class PositionEnvelope(override val width : Int, override val height: Int, position: Position) extends Board {
 
-  def convertPositionToNumber =  {
+  def getPositionID =  {
     position.y * width + position.x
   }
 
