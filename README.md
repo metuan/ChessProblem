@@ -41,10 +41,10 @@ code will be used as a proof of your capabilities.
 ### HOW TO RUN
 
 You can clone repository, import it to Your favourite IDE and run it from there or using SBT: enter root directory of application and type:
-```
+~~~~
 sbt test // to run tests 
 sbt run // to run example configuration 
-````
+~~~~
 
 
 ### Answer
