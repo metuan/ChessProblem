@@ -1,6 +1,4 @@
-package com.scalac.chessProblem
-
-import com.scalac.chessProblem.model._
+package com.model
 
 object Runner {
 
@@ -14,8 +12,8 @@ object Runner {
       list
     }
 
-    val board = new ChessBoard(7,7)
-    val setupOfPieces = List(setNumberOfPiece((King,2)), setNumberOfPiece(Queen, 2), setNumberOfPiece(Bishop, 2), setNumberOfPiece(Knight, 1)).flatten
+    val board = new ChessBoard(3,3)
+    val setupOfPieces = List(setNumberOfPiece((King,1)), setNumberOfPiece(Queen, 1)).flatten
     import System.{currentTimeMillis => clockStartStop}
     val begin = clockStartStop()
     val (number, list) = board.solve(setupOfPieces)

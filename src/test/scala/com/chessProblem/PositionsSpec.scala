@@ -1,5 +1,5 @@
-package com.scalac.chessProblem
-import com.scalac.chessProblem.model._
+package com.model
+
 import org.scalatest._
 
 class PositionsSpec extends FlatSpec{

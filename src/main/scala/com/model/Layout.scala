@@ -1,4 +1,4 @@
-package com.scalac.chessProblem.model
+package com.model
 
 abstract class PositionToPrint
 case object EmptyPosition extends PositionToPrint

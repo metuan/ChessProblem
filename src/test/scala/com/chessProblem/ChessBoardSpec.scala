@@ -1,6 +1,5 @@
-package com.scalac.chessProblem
+package com.model
 
-import com.scalac.chessProblem.model._
 import org.scalatest._
 
 

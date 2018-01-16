@@ -1,4 +1,4 @@
-package com.scalac.chessProblem.model
+package com.model
 
 case class Position(x: Int, y: Int) {
   def placeOnPosition(position: Position): Position = copy( x = position.x + x , y = position.y + y)

@@ -1,5 +1,4 @@
-package com.scalac.chessProblem.model
-
+package com.model
 
 abstract class Piece(val symbolOfPiece: String) {
   def isValidMove(dir: Position): Boolean

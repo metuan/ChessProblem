@@ -1,4 +1,4 @@
-package com.scalac.chessProblem.model
+package com.model
 
 trait Board {
   def width: Int

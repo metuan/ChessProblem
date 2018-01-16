@@ -1,7 +1,4 @@
-package com.scalac.chessProblem
-
-import com.scalac.chessProblem.model._
-import scala.language.implicitConversions
+package com.model
 
 class ChessBoard(override val width : Int, override val height: Int) extends Board {
 
@@ -69,7 +66,7 @@ class ChessBoard(override val width : Int, override val height: Int) extends Boa
       case _ => listOfAvailablePositions
     }
 
-    override def equals(obj: scala.Any) = {
+    override def equals(obj: Any) = {
       obj match {
         case possibleInstance : singleChessBoard => List(layout: _*) == List(possibleInstance.layout :_*)
         case _ => false
@@ -97,6 +94,7 @@ class ChessBoard(override val width : Int, override val height: Int) extends Boa
     }}
 
   case class EmptyBoard() extends singleChessBoard
+
 
   def solve(piecesToPutOnBoard: List[Piece]) : (Int, List[singleChessBoard]) = {
     val pieces = piecesToPutOnBoard.map {
