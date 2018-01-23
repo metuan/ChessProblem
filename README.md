@@ -7,8 +7,8 @@ dimensions M×N where none of the pieces is in a position to take any of the oth
 results is useful, but not enough to complete the assignment. Assume the colour of the piece does not
 matter, and that there are no pawns among the pieces.
 Write a program which takes as input:
-    ● The dimensions of the board: M, N
-    ● The number of pieces of each type (King, Queen, Bishop, Rook and Knight) to try and place on the
+- The dimensions of the board: M, N
+- The number of pieces of each type (King, Queen, Bishop, Rook and Knight) to try and place on the
 board.
 As output, the program should list all the unique configurations to the console for which all of the pieces can
 be placed on the board without threatening each other.
@@ -62,5 +62,3 @@ In my solution I wanted to use recursive backtracking algorithm (its use case is
 - We can have a look at our result layouts. We can find among them similar ones. It is possible to rely on that fact. We can try to find 'base' set of 'winning' layouts and generate other layouts which based on them. I could implement function to find first winning set and then by combinations (Newton Symbol) try to generate other winning chess boards. 
 
 - It is possible to use pure functional tail-recurisve functions to generate those winning layouts since we are using recursive backtracking. It would be much more time effective than my solution but it would take much more time for me to write it. 
-
-### If You have any question about my solution - just write an e-mail and I will try to respond ASAP. 
