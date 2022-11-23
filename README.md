@@ -18,7 +18,7 @@ a 7×7 board with 2 Kings, 2 Queens, 2 Bishops and 1 Knight. Also provide the ti
 the final score. Needless to say, the lower the time, the better.
 
 
-### HOW TO RUN
+### How to run
 
 You can clone repository, import it to Your favourite IDE and run it from there or using SBT: enter root directory of application and type:
 ~~~~
